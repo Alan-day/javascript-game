@@ -1,0 +1,19 @@
+{
+  "name": "javascript-game",
+  "version": "1.0.0",
+  "description": "About the game",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alan-day/javascript-game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Alan-day/javascript-game/issues"
+  },
+  "homepage": "https://github.com/Alan-day/javascript-game#readme"
+}
