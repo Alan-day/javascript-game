@@ -10,6 +10,14 @@ body {
   background-color: beige;
 }
 
+.computerDeck {
+  display: flex;
+}
+
+.userDeck {
+  display: flex;
+}
+
 footer {
   color: white;
   height: 2vh;
@@ -19,4 +27,14 @@ footer {
 button {
   display: flex;
   background-color: purple;
+}
+
+.userField {
+  background-color: red;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
 }/*# sourceMappingURL=main.css.map */
