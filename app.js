@@ -6,6 +6,7 @@ let userField = document.querySelector(".userField");
 const divs = document.querySelectorAll("div");
 let creatures = [];
 let heroes = [];
+let fightingHero;
 
 const computer_deck = [
   {
@@ -80,6 +81,7 @@ const computer_deck = [
 const user_deck = [
   {
     id: 1,
+    defence: 10,
     name: "Archer",
     attack: 10,
     image: "monsters_and_heroes/hero_archer.png",
@@ -88,54 +90,63 @@ const user_deck = [
     id: 2,
     name: "Slinger",
     attack: 10,
+    defence: 10,
     image: "monsters_and_heroes/hero_barefoot_slinger.png",
   },
   {
     id: 3,
     name: "Centaur",
     attack: 10,
+    defence: 10,
     image: "monsters_and_heroes/hero_centaur.png",
   },
   {
     id: 4,
     name: "Dwarf Warrior",
     attack: 10,
+    defence: 10,
     image: "monsters_and_heroes/hero_dwarf_warrior.png",
   },
   {
     id: 5,
     name: "Adventurer from Mystos",
     attack: 10,
+    defence: 10,
     image: "monsters_and_heroes/hero_greatsword_adventurer.png",
   },
   {
     id: 6,
     name: "Knight of Greenleaf Order",
     attack: 10,
+    defence: 10,
     image: "monsters_and_heroes/hero_green_knight.png",
   },
   {
     id: 7,
     name: "Swordsman",
     attack: 10,
+    defence: 10,
     image: "monsters_and_heroes/hero_heavy_swordsman.png",
   },
   {
     id: 8,
     name: "light swordsman",
     attack: 10,
+    defence: 10,
     image: "monsters_and_heroes/hero_light_swordsman.png",
   },
   {
     id: 9,
     name: "Paladin",
     attack: 10,
+    defence: 10,
     image: "monsters_and_heroes/hero_paladin.png",
   },
   {
     id: 10,
     name: "pikeman",
     attack: 4,
+    defence: 10,
     image: "monsters_and_heroes/hero_pikeman.png",
   },
 
@@ -143,9 +154,15 @@ const user_deck = [
     id: 11,
     name: "villager",
     attack: 3,
+    defence: 10,
     image: "monsters_and_heroes/hero_village_idiot.png",
   },
 ];
+
+const throwDice = (event) => {
+  let dice = Math.floor(Math.random() * 5 + 1);
+  return dice;
+};
 
 const shuffleComputerCards = () => {
   for (let i = 0; i < 5; i++) {
@@ -170,6 +187,7 @@ const shuffleUserCards = () => {
   }
   return heroes;
 };
+
 const displayDeck = () => {
   shuffleComputerCards();
   shuffleUserCards();
@@ -179,31 +197,44 @@ const displayDeck = () => {
   });
 
   heroes.forEach((item) => {
-    deckUser.innerHTML += `<div class ="card">${item.name} attack: ${item.attack} defence: ${item.defence} <img src="${item.image}"></div>`;
+    deckUser.innerHTML += `<div class ="card"> attack: ${item.attack} defence: ${item.defence} <img src="${item.image}"></div>`;
   });
 };
 
 const playGame = (event) => {
   displayDeck();
-};
 
-const selectHero = (event) => {
-  userField.innerHTML += event.target.heroes;
-  console.log("Clicked");
-};
+  let fightingMonster = creatures[0];
+  console.log(creatures[0]);
+  computerField.innerHTML = `<div class ="card"><img src="${fightingMonster.image}">attack: ${fightingMonster.attack}</div>`;
 
-start.addEventListener("click", playGame, { once: true });
+  console.log(computerField);
+};
+const showFields = (event) => {
+  userField.innerHTML.style.display = "block";
+  computerField.innerHTML.style.display = "block";
+};
+start.addEventListener("click", playGame, { once: true }, showFields);
 
 deckUser.addEventListener("click", (event) => {
-  console.log(heroes);
   if (event.target.matches("div")) {
     userField.innerHTML = event.target.innerHTML;
-    let select = event.target.innerHTML.id;
-    deckUser.splice(select, 1);
-    heroes.innerHTML(event.target.innerHTML);
-    deckUser.innerHTML = "";
+    let fightingHero = userField;
+    console.log(userField);
+
+    heroes.splice(fightingHero, 1);
+
     heroes.forEach((item) => {
-      deckUser.innerHTML += `<div class ="card">${item.name} attack: ${item.attack} defence: ${item.defence}</div>`;
+      heroes.innerHTML += `<div class ="card"> attack: ${item.attack} defence: ${item.defence} <img src="${item.image}"></div>`;
     });
+    console.log(heroes);
   }
 });
+const fight = () => {
+  if (userField != "") {
+    throwDice() * fightingHero.attack -
+      fightingMonster.attack +
+      fightingHero.defence;
+  }
+};
+console.log(fight());

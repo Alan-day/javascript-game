@@ -1,9 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Crete+Round&family=DynaPuff:wght@500&family=Sedgwick+Ave+Display&display=swap");
+$header-font: "DynaPuff", "sans-serif";
+$paragraph-font: "Crete Round", "sans-serif";
 header {
   height: 5vh;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: darkgreen;
+  font-family: $header-font;
+  font-size: 52px;
 }
 
 body {
@@ -29,12 +34,26 @@ button {
   background-color: purple;
 }
 
-.userField {
+.computerField {
+  //display: none;
+  height: 400px;
   background-color: red;
+}
+
+.userField {
+  // display: none;
+  height: 400px;
+  background-color: greenyellow;
 }
 
 .card {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   width: 300px;
+  font-family: $paragraph-font;
+  font-size: 22px;
+}
+
+img {
+  max-height: 400px;
 }
