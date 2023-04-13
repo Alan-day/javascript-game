@@ -21,26 +21,3 @@ example of computer card
 
 MIGHTY HYDRA  
 attack: 30
-
-creaturesComputer =['comp_card', 'compt_card', 'comp_card']
-creaturesUser = ['user_card', 'user_card', 'user_card']
-
-choosing a card (seperate functions for computer and user)
-
-const randomElement =
-for(i =0, i < 4, i++)
-creaturesUser[Math.floor(Math.random() * array.length)];
-
-handleCombat = (comp_card, user_card) {
-
-return (user_card.attack - (user_card.defence - comp_card.attack))
-}
-
-let dice = Math.floor((Math.random() \* 6)+1) ;
-
-let round =1;
-
-startGame = (event) = {
-invoke functions
-
-}

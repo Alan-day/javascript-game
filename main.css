@@ -33,12 +33,12 @@ button {
 }
 
 .computerField {
-  height: 400px;
+  height: 450px;
   background-color: red;
 }
 
 .userField {
-  height: 400px;
+  height: 450px;
   background-color: greenyellow;
 }
 
