@@ -43,6 +43,7 @@ button {
 }
 
 .card {
+  margin: 10px;
   display: flex;
   flex-direction: column-reverse;
   width: 300px;
@@ -52,4 +53,4 @@ button {
 
 img {
   max-height: 400px;
-}/*# sourceMappingURL=main.css.map */
+} /*# sourceMappingURL=main.css.map */

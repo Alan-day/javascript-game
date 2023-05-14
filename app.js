@@ -6,7 +6,6 @@ let userField = document.querySelector(".userField");
 const divs = document.querySelectorAll("div");
 let creatures = [];
 let heroes = [];
-let fightingHero;
 
 const computer_deck = [
   {
@@ -197,7 +196,7 @@ const displayDeck = () => {
   });
 
   heroes.forEach((item) => {
-    deckUser.innerHTML += `<div class ="card"> attack: ${item.attack} defence: ${item.defence} <img src="${item.image}"></div>`;
+    deckUser.innerHTML += `<div class ="card">  attack: ${item.attack} defence: ${item.defence} <img src="${item.image}"> card no. ${item.id} </div>`;
   });
 };
 
@@ -214,22 +213,30 @@ const showFields = (event) => {
   userField.innerHTML.style.display = "block";
   computerField.innerHTML.style.display = "block";
 };
+
 start.addEventListener("click", playGame, { once: true }, showFields);
 
 deckUser.addEventListener("click", (event) => {
-  if (event.target.matches("div")) {
-    userField.innerHTML = event.target.innerHTML;
-    let fightingHero = userField;
-    console.log(userField);
+  let fightingHero = event.target.innerHTML;
 
-    heroes.splice(fightingHero, 1);
+  if (event.target.matches(".card")) {
+    userField.innerHTML = fightingHero;
 
-    heroes.forEach((item) => {
-      heroes.innerHTML += `<div class ="card"> attack: ${item.attack} defence: ${item.defence} <img src="${item.image}"></div>`;
-    });
+    console.log(fightingHero);
     console.log(heroes);
+
+    // for (let i = 0; i < heroes.length; i++) {
+    //   if (fightingHero.id.match(heroes[i].id)) {
+    //     heroes.splice(indexOf(fightingHero), 1);
+    //   }
+    // }
   }
+
+  heroes.map((item) => {
+    heroes.innerHTML += `<div class ="card"> attack: ${item.attack} defence: ${item.defence} <img src="${item.image}"> id:${item.id}</div>`;
+  });
 });
+
 const fight = () => {
   if (userField != "") {
     throwDice() * fightingHero.attack -
@@ -237,4 +244,3 @@ const fight = () => {
       fightingHero.defence;
   }
 };
-console.log(fight());
