@@ -29,7 +29,7 @@ footer {
 
 button {
   display: flex;
-  background-color: purple;
+  background-color: pink;
 }
 
 .computerField {
@@ -53,4 +53,8 @@ button {
 
 img {
   max-height: 400px;
-} /*# sourceMappingURL=main.css.map */
+}
+
+.score-container {
+  margin: 20px 0px;
+}/*# sourceMappingURL=main.css.map */

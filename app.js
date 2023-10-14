@@ -4,6 +4,12 @@ let computerField = document.querySelector(".computerField");
 let deckUser = document.querySelector(".userDeck");
 let userField = document.querySelector(".userField");
 const divs = document.querySelectorAll("div");
+const cardElements = document.querySelectorAll(".card");
+let scoreContainer = document.querySelectorAll(".score-container");
+
+let computerScore = document.querySelector(".computer_score");
+let playerScore = document.querySelector(".player_score");
+
 let creatures = [];
 let heroes = [];
 
@@ -182,6 +188,7 @@ const shuffleUserCards = () => {
     if (!heroes.includes(selectedMonster)) {
       user_deck.splice(random, 1);
       heroes.push(selectedMonster);
+      console.log(heroes);
     }
   }
   return heroes;
@@ -196,19 +203,38 @@ const displayDeck = () => {
   });
 
   heroes.forEach((item) => {
-    deckUser.innerHTML += `<div class ="card">  attack: ${item.attack} defence: ${item.defence} <img src="${item.image}"> card no. ${item.id} </div>`;
+    const heroData = JSON.stringify(item);
+    deckUser.innerHTML += `
+      <div class="card" 
+           data-hero='${heroData}' 
+           data-attack='${item.attack}' 
+           data-defense='${item.defence}'>
+        <img src="${item.image}" />
+        Card no. ${item.id}
+      </div>
+    `;
   });
 };
+
+cardElements.forEach((card) => {
+  const heroDataJSON = card.getAttribute("data-hero");
+  const heroData = JSON.parse(heroDataJSON);
+
+  //  `heroData` contains the object associated with the card element, i couldn't get that earlier as i just had innerHTML
+  console.log(heroData);
+});
 
 const playGame = (event) => {
   displayDeck();
 
   let fightingMonster = creatures[0];
   console.log(creatures[0]);
+
   computerField.innerHTML = `<div class ="card"><img src="${fightingMonster.image}">attack: ${fightingMonster.attack}</div>`;
 
   console.log(computerField);
 };
+
 const showFields = (event) => {
   userField.innerHTML.style.display = "block";
   computerField.innerHTML.style.display = "block";
@@ -217,30 +243,71 @@ const showFields = (event) => {
 start.addEventListener("click", playGame, { once: true }, showFields);
 
 deckUser.addEventListener("click", (event) => {
-  let fightingHero = event.target.innerHTML;
-
   if (event.target.matches(".card")) {
-    userField.innerHTML = fightingHero;
+    // get attributes
+    const heroDataJSON = event.target.getAttribute("data-hero");
+    const heroData = JSON.parse(heroDataJSON);
+
+    //this html contents creates an object
+    const cardHTML = `
+      <div class="card" data-hero='${heroDataJSON}'>
+        attack: ${heroData.attack}
+        defence: ${heroData.defence}
+        <img src="${heroData.image}">
+        id: ${heroData.id}
+      </div>
+    `;
+
+    
+    userField.innerHTML = cardHTML;
+
+    const fightingHero = {
+      attack: heroData.attack,
+      defence: heroData.defence,
+    };
 
     console.log(fightingHero);
-    console.log(heroes);
 
-    // for (let i = 0; i < heroes.length; i++) {
-    //   if (fightingHero.id.match(heroes[i].id)) {
-    //     heroes.splice(indexOf(fightingHero), 1);
-    //   }
-    // }
+    // Removing the card
+    const cardId = heroData.id;
+    const cardIndex = heroes.findIndex((item) => item.id === cardId);
+    if (cardIndex !== -1) {
+      heroes.splice(cardIndex, 1);
+    }
+
+    // Re-rendering the rest of the deck 
+    deckUser.innerHTML = "";
+    heroes.forEach((item) => {
+      const heroData = JSON.stringify(item);
+      deckUser.innerHTML += `
+        <div class="card" data-hero='${heroData}'>
+          attack: ${item.attack}
+          defence: ${item.defence}
+          <img src="${item.image}">
+          card no. ${item.id}
+        </div>
+      `;
+    });
   }
-
-  heroes.map((item) => {
-    heroes.innerHTML += `<div class ="card"> attack: ${item.attack} defence: ${item.defence} <img src="${item.image}"> id:${item.id}</div>`;
-  });
 });
 
 const fight = () => {
   if (userField != "") {
-    throwDice() * fightingHero.attack -
+    const userDice = throwDice();
+    const computerDice = throwDice();
+    const userAttack =
+      userDice * fightingHero.attack -
       fightingMonster.attack +
       fightingHero.defence;
+    const computerAttack =
+      computerDice * fightingMonster.attack - fightingHero.defence;
+
+    if (userAttack <= computerAttack) {
+      computerScore += 1;
+    } else {
+      playerScore += 1;
+    }
   }
 };
+
+scoreContainer.addEventListener("click", fight);
