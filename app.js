@@ -5,13 +5,16 @@ let deckUser = document.querySelector(".userDeck");
 let userField = document.querySelector(".userField");
 const divs = document.querySelectorAll("div");
 const cardElements = document.querySelectorAll(".card");
-let scoreContainer = document.querySelectorAll(".score-container");
+let combatButton = document.querySelector(".fight");
 
-let computerScore = document.querySelector(".computer_score");
-let playerScore = document.querySelector(".player_score");
+let computerPoints = document.querySelector(".computer_score");
+let playerPoints = document.querySelector(".player_score");
 
 let creatures = [];
 let heroes = [];
+
+let fightingHero = {};
+let fightingMonster = {};
 
 const computer_deck = [
   {
@@ -245,11 +248,9 @@ start.addEventListener("click", playGame, { once: true }, showFields);
 
 deckComputer.addEventListener("click", (event) => {
   if (event.target.matches(".card")) {
-
     const monsterDataJSON = event.target.getAttribute("data-hero");
     const monsterData = JSON.parse(monsterDataJSON);
 
-   
     const cardHTML = `
       <div class="card" data-hero='${monsterDataJSON}'>
         attack: ${monsterData.attack}
@@ -257,12 +258,10 @@ deckComputer.addEventListener("click", (event) => {
       </div>
     `;
 
-
     computerField.innerHTML = cardHTML;
 
-    const fightingMonster = {
+    fightingMonster = {
       attack: monsterData.attack,
- 
     };
 
     console.log(fightingMonster);
@@ -273,7 +272,6 @@ deckComputer.addEventListener("click", (event) => {
       creatures.splice(cardIndex, 1);
     }
 
-    
     deckComputer.innerHTML = "";
     creatures.forEach((item) => {
       const monsterData = JSON.stringify(item);
@@ -290,11 +288,9 @@ deckComputer.addEventListener("click", (event) => {
 
 deckUser.addEventListener("click", (event) => {
   if (event.target.matches(".card")) {
-    
     const heroDataJSON = event.target.getAttribute("data-hero");
     const heroData = JSON.parse(heroDataJSON);
 
-    
     const cardHTML = `
       <div class="card" data-hero='${heroDataJSON}'>
         attack: ${heroData.attack}
@@ -306,21 +302,19 @@ deckUser.addEventListener("click", (event) => {
 
     userField.innerHTML = cardHTML;
 
-    const fightingHero = {
+    fightingHero = {
       attack: heroData.attack,
       defence: heroData.defence,
     };
 
     console.log(fightingHero);
 
-   
     const cardId = heroData.id;
     const cardIndex = heroes.findIndex((item) => item.id === cardId);
     if (cardIndex !== -1) {
       heroes.splice(cardIndex, 1);
     }
 
-    
     deckUser.innerHTML = "";
     heroes.forEach((item) => {
       const heroData = JSON.stringify(item);
@@ -337,22 +331,29 @@ deckUser.addEventListener("click", (event) => {
 });
 
 const fight = () => {
-  if (userField != "") {
+  if (userField.innerHTML != "" && computerField.innerHTML != "") {
     const userDice = throwDice();
     const computerDice = throwDice();
+
     const userAttack =
       userDice * fightingHero.attack -
       fightingMonster.attack +
       fightingHero.defence;
+
+    console.log(userAttack);
+
     const computerAttack =
       computerDice * fightingMonster.attack - fightingHero.defence;
+    console.log(computerAttack);
 
     if (userAttack <= computerAttack) {
-      computerScore += 1;
+      computerPoints.textContent = +1;
     } else {
-      playerScore += 1;
+      playerPoints.textContent = +1;
     }
+  } else {
+    console.log("fighting fields are not populated!");
   }
 };
 
-scoreContainer.addEventListener("click", fight);
+combatButton.addEventListener("click", fight);
