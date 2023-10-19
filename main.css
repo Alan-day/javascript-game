@@ -15,10 +15,12 @@ body {
 
 .computerDeck {
   display: flex;
+  min-height: 100px;
 }
 
 .userDeck {
   display: flex;
+  min-height: 100px;
 }
 
 footer {

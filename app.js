@@ -335,21 +335,37 @@ const fight = () => {
     const userDice = throwDice();
     const computerDice = throwDice();
 
-    const userAttack =
-      userDice * fightingHero.attack -
-      fightingMonster.attack +
-      fightingHero.defence;
+    const userAttack = userDice * fightingHero.attack + fightingHero.defence;
 
-    console.log(userAttack);
+    console.log("user attack" + userAttack);
 
     const computerAttack =
       computerDice * fightingMonster.attack - fightingHero.defence;
-    console.log(computerAttack);
+    console.log("computer attack" + computerAttack);
 
     if (userAttack <= computerAttack) {
-      computerPoints.textContent = +1;
+      computerPoints.innerHTML++;
     } else {
-      playerPoints.textContent = +1;
+      playerPoints.innerHTML++;
+    }
+
+    userField.innerHTML = "";
+    computerField.innerHTML = "";
+    fightingHero = "";
+    fightingMonster = "";
+
+    if (
+      deckUser.innerHTML == "" &&
+      deckComputer.innerHTML == "" &&
+      computerAttack > userAttack
+    ) {
+      alert("Computer wins");
+    } else if (
+      deckUser.innerHTML == "" &&
+      deckComputer.innerHTML == "" &&
+      computerAttack < userAttack
+    ) {
+      alert("You win!");
     }
   } else {
     console.log("fighting fields are not populated!");
