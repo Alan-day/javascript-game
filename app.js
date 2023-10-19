@@ -234,17 +234,55 @@ cardElements.forEach((card) => {
 
   //  `heroData` contains the object associated with the card element, i couldn't get that earlier as i just had innerHTML
 });
+const drawRandomCreature = () => {
+  if (creatures.length > 0) {
+    const randomIndex = Math.floor(Math.random() * creatures.length);
+    const randomCreature = creatures[randomIndex];
+    console.log(randomCreature);
 
+    const monsterDataJSON = JSON.stringify(randomCreature);
+
+    const cardHTML = `
+      <div class="card" data-monster='${monsterDataJSON}'>
+        attack: ${randomCreature.attack}
+        <img src="${randomCreature.image}">
+      </div>
+    `;
+
+    computerField.innerHTML = cardHTML;
+
+    fightingMonster = {
+      attack: randomCreature.attack,
+    };
+
+    creatures.splice(randomIndex, 1);
+    deckComputer.innerHTML = "";
+
+    creatures.forEach((item) => {
+      const monsterData = JSON.stringify(item);
+
+      deckComputer.innerHTML += `
+        <div class="card" data-hero='${monsterData}'>
+          attack: ${item.attack}
+          <img src="${item.image}">
+          card no. ${item.id}
+        </div>
+      `;
+    });
+  } else {
+    console.log("No more creatures in the deck.");
+  }
+};
 const playGame = (event) => {
+  // show deck and start the battle
   displayDeck();
+  drawRandomCreature();
 };
 
 const showFields = (event) => {
   userField.innerHTML.style.display = "block";
   computerField.innerHTML.style.display = "block";
 };
-
-start.addEventListener("click", playGame, { once: true }, showFields);
 
 deckComputer.addEventListener("click", (event) => {
   if (event.target.matches(".card")) {
@@ -354,6 +392,8 @@ const fight = () => {
     fightingHero = "";
     fightingMonster = "";
 
+    drawRandomCreature();
+
     if (
       deckUser.innerHTML == "" &&
       deckComputer.innerHTML == "" &&
@@ -373,3 +413,4 @@ const fight = () => {
 };
 
 combatButton.addEventListener("click", fight);
+start.addEventListener("click", playGame, { once: true }, showFields);
