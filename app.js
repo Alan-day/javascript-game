@@ -204,12 +204,12 @@ const displayDeck = () => {
   creatures.forEach((item) => {
     const creatureData = JSON.stringify(item);
     deckComputer.innerHTML += `
-      <div class="card" 
-           data-creature='${creatureData}' 
-           data-attack='${item.attack}' 
-      
+      <div class="card"
+           data-creature='${creatureData}'
+           data-attack='${item.attack}'
+
         <img src="${item.image}" />
-      
+
       </div>
     `;
   });
@@ -245,7 +245,7 @@ const drawRandomCreature = () => {
     const cardHTML = `
       <div class="card" data-monster='${monsterDataJSON}'>
         attack: ${randomCreature.attack}
-        <img src="${randomCreature.image}">
+         <img src="${randomCreature.image}">
       </div>
     `;
 
@@ -285,7 +285,7 @@ const showFields = (event) => {
 };
 
 deckUser.addEventListener("click", (event) => {
-  if (event.target.matches(".img")) {
+  if (event.target.matches(".card")) {
     const heroDataJSON = event.target.getAttribute("data-hero");
     const heroData = JSON.parse(heroDataJSON);
 
@@ -293,7 +293,7 @@ deckUser.addEventListener("click", (event) => {
       <div class="card" data-hero='${heroDataJSON}'>
         attack: ${heroData.attack}
         defence: ${heroData.defence}
-        <div class ="cardImage"><img  src="${heroData.image}"></div>
+      <img src="${heroData.image}">
        
       </div>
     `;
@@ -319,7 +319,6 @@ deckUser.addEventListener("click", (event) => {
           attack: ${item.attack}
           defence: ${item.defence}
           <img src="${item.image}">
-        
         </div>
       `;
     });
