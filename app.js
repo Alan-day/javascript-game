@@ -20,68 +20,68 @@ const computer_deck = [
   {
     id: 1,
     name: "Centaur",
-    attack: 30,
+    attack: 10,
     image: "monsters_and_heroes/hero_centaur.png",
   },
   {
     id: 2,
     name: "Fiery Dragon",
-    attack: 12,
+    attack: 30,
     image: "monsters_and_heroes/monster_fiery_dragon.png",
   },
   {
     id: 3,
     name: "Grim Pikeman",
-    attack: 52,
+    attack: 15,
     image: "monsters_and_heroes/monster_grim_pikeman.png",
   },
   {
     id: 4,
     name: "Mighty Hydra",
-    attack: 52,
+    attack: 25,
     image: "monsters_and_heroes/monster_mighty_hydra.png",
   },
   {
     id: 5,
     name: "Skeleton Warrior",
-    attack: 52,
+    attack: 8,
     image: "monsters_and_heroes/monster_skeleton_warrior.png",
   },
   {
     id: 6,
     name: "Viper King",
-    attack: 52,
+    attack: 22,
     image: "monsters_and_heroes/monster_viper_king.png",
   },
   {
     id: 7,
     name: "Goblin Warrior",
-    attack: 52,
+    attack: 7,
     image: "monsters_and_heroes/monster_goblin_warrior.png",
   },
   {
     id: 8,
     name: "Warewolf",
-    attack: 52,
+    attack: 14,
     image: "monsters_and_heroes/monster_werewolf.png",
   },
 
   {
     id: 9,
     name: "Banshee",
-    attack: 52,
+    attack: 18,
     image: "monsters_and_heroes/monster_the_banshee.png",
   },
   {
     id: 10,
     name: "Viverna",
-    attack: 52,
+    attack: 19,
     image: "monsters_and_heroes/monster_viverna.png",
   },
   {
     id: 11,
     name: "Troll Warrior",
-    attack: 52,
+    attack: 25,
     image: "monsters_and_heroes/monster_troll_warrior.png",
   },
 ];
@@ -205,11 +205,11 @@ const displayDeck = () => {
     const creatureData = JSON.stringify(item);
     deckComputer.innerHTML += `
       <div class="card" 
-           data-hero='${creatureData}' 
+           data-creature='${creatureData}' 
            data-attack='${item.attack}' 
-           data-defense='${item.defence}'>
+      
         <img src="${item.image}" />
-        Card no. ${item.id}
+      
       </div>
     `;
   });
@@ -221,24 +221,24 @@ const displayDeck = () => {
            data-hero='${heroData}' 
            data-attack='${item.attack}' 
            data-defense='${item.defence}'>
-        <img src="${item.image}" />
-        Card no. ${item.id}
+       <div class ="cardImage"> <img src="${item.image}" /></div>
+      
       </div>
     `;
   });
 };
 
-cardElements.forEach((card) => {
-  const heroDataJSON = card.getAttribute("data-hero");
-  const heroData = JSON.parse(heroDataJSON);
+// cardElements.forEach((card) => {
+//   const heroDataJSON = card.getAttribute("data-hero");
+//   const heroData = JSON.parse(heroDataJSON);
 
-  //  `heroData` contains the object associated with the card element, i couldn't get that earlier as i just had innerHTML
-});
+//   //  `heroData` contains the object associated with the card element, i couldn't get that earlier as i just had innerHTML
+// });
+
 const drawRandomCreature = () => {
   if (creatures.length > 0) {
     const randomIndex = Math.floor(Math.random() * creatures.length);
     const randomCreature = creatures[randomIndex];
-    console.log(randomCreature);
 
     const monsterDataJSON = JSON.stringify(randomCreature);
 
@@ -284,48 +284,8 @@ const showFields = (event) => {
   computerField.innerHTML.style.display = "block";
 };
 
-deckComputer.addEventListener("click", (event) => {
-  if (event.target.matches(".card")) {
-    const monsterDataJSON = event.target.getAttribute("data-hero");
-    const monsterData = JSON.parse(monsterDataJSON);
-
-    const cardHTML = `
-      <div class="card" data-hero='${monsterDataJSON}'>
-        attack: ${monsterData.attack}
-        <img src="${monsterData.image}">
-      </div>
-    `;
-
-    computerField.innerHTML = cardHTML;
-
-    fightingMonster = {
-      attack: monsterData.attack,
-    };
-
-    console.log(fightingMonster);
-
-    const cardId = monsterData.id;
-    const cardIndex = creatures.findIndex((item) => item.id === cardId);
-    if (cardIndex !== -1) {
-      creatures.splice(cardIndex, 1);
-    }
-
-    deckComputer.innerHTML = "";
-    creatures.forEach((item) => {
-      const monsterData = JSON.stringify(item);
-      deckComputer.innerHTML += `
-        <div class="card" data-hero='${monsterData}'>
-          attack: ${item.attack}
-          <img src="${item.image}">
-          card no. ${item.id}
-        </div>
-      `;
-    });
-  }
-});
-
 deckUser.addEventListener("click", (event) => {
-  if (event.target.matches(".card")) {
+  if (event.target.matches(".img")) {
     const heroDataJSON = event.target.getAttribute("data-hero");
     const heroData = JSON.parse(heroDataJSON);
 
@@ -333,8 +293,8 @@ deckUser.addEventListener("click", (event) => {
       <div class="card" data-hero='${heroDataJSON}'>
         attack: ${heroData.attack}
         defence: ${heroData.defence}
-        <img src="${heroData.image}">
-        id: ${heroData.id}
+        <div class ="cardImage"><img  src="${heroData.image}"></div>
+       
       </div>
     `;
 
@@ -344,8 +304,6 @@ deckUser.addEventListener("click", (event) => {
       attack: heroData.attack,
       defence: heroData.defence,
     };
-
-    console.log(fightingHero);
 
     const cardId = heroData.id;
     const cardIndex = heroes.findIndex((item) => item.id === cardId);
@@ -361,7 +319,7 @@ deckUser.addEventListener("click", (event) => {
           attack: ${item.attack}
           defence: ${item.defence}
           <img src="${item.image}">
-          card no. ${item.id}
+        
         </div>
       `;
     });
@@ -377,7 +335,7 @@ const fight = () => {
 
     console.log("user attack" + userAttack);
 
-    const computerAttack =
+    const computerAttack = // way of counting points
       computerDice * fightingMonster.attack - fightingHero.defence;
     console.log("computer attack" + computerAttack);
 

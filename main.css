@@ -15,11 +15,13 @@ body {
 
 .computerDeck {
   display: flex;
+  justify-content: center;
   min-height: 100px;
 }
 
 .userDeck {
   display: flex;
+  justify-content: center;
   min-height: 100px;
 }
 
@@ -35,26 +37,33 @@ button {
 }
 
 .computerField {
-  height: 450px;
-  background-color: red;
+  display: flex;
+  justify-content: center;
+  height: 400px;
+  background-color: bisque;
+  border-bottom: 1px solid black;
 }
 
 .userField {
-  height: 450px;
-  background-color: greenyellow;
+  display: flex;
+  justify-content: center;
+  height: 400px;
+  background-color: bisque;
 }
 
 .card {
-  margin: 10px;
+  border: 1px solid;
+  margin: 20px 10px;
   display: flex;
   flex-direction: column-reverse;
-  width: 300px;
+  width: 200px;
   font-family: "Crete Round", "sans-serif";
   font-size: 22px;
 }
 
 img {
-  max-height: 400px;
+  border-radius: 15px;
+  max-height: 300px;
 }
 
 .score-container {
