@@ -57,9 +57,9 @@ button {
 .card {
   border: 1px solid;
   margin: 20px 10px;
+  padding: 20px;
   display: flex;
   flex-direction: column-reverse;
-
   width: 200px;
   font-family: $paragraph-font;
   font-size: 22px;
